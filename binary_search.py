@@ -28,12 +28,12 @@ class StubList(object):
 if __name__ == "__main__":
 
     #zope.interface.classImplements(AscendingList, IAscendingList)
-    #zope.interface.verify.verifyObject(IAscendingList, StubList())
+    zope.interface.verify.verifyObject(IAscendingList, StubList())
     
-    my_list = AscendingList()
-    my_list.extend([1, 2, 3])
-    print(my_list)
+    #my_list = AscendingList()
+    #my_list.extend([1, 2, 3])
+    #print(my_list)
 
-    IAscendingList.validateInvariants(my_list)          
-    zope.interface.verify.verifyObject(IAscendingList, my_list)
+    #IAscendingList.validateInvariants(my_list)
+    #zope.interface.verify.verifyObject(IAscendingList, my_list)
 
