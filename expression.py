@@ -1,5 +1,5 @@
 from zope.interface import implementer, Interface, Attribute
-
+from zope.interface.verify import verifyObject
 
 class IExpressionNode(Interface):
     left = Attribute("The left child of this expression.")
@@ -42,4 +42,25 @@ class BrokenIntegerExpressionNode(object):
 
     def evaluate(self):
         return self.value
+
+
+def validate_addition_node():
+    IExpressionNode.implementedBy(AdditionExpressionNode)
+    eight = AdditionExpressionNode(IntegerExpressionNode(5), IntegerExpressionNode(3))
+    IExpressionNode.providedBy(eight)
+    verifyObject(IExpressionNode, eight)
+
+
+def validate_integer_node():
+    IExpressionNode.implementedBy(IntegerExpressionNode)
+    eight = IntegerExpressionNode(8)
+    IExpressionNode.providedBy(eight)
+    verifyObject(IExpressionNode, eight)
+
+
+def validate_broken_integer_node():
+    IExpressionNode.implementedBy(BrokenIntegerExpressionNode)
+    eight = BrokenIntegerExpressionNode(8)
+    IExpressionNode.providedBy(eight)
+    verifyObject(IExpressionNode, eight)
 

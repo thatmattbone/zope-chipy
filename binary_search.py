@@ -1,39 +1,45 @@
-import zope.interface
-import zope.interface.verify
+from zope.interface import implementer, invariant, Invalid, Interface
+from zope.interface.verify import verifyObject
 
 
 def ascending_invariant(ascending_list):
-    prev = None
-    for item in ascending_list:
-        if prev is None:
-            prev = item
-        elif prev > item:
-            raise zope.interface.Invalid
+    """
+    Make sure the list is in ascending order. 
+
+    Raise a zope.interface.Invalid exception if it is not.
+    """
+    if len(ascending_list) > 0:
+        prev = ascending_list[0]
+        for item in ascending_list:
+            if prev > item:
+                raise Invalid
 
 
-class IAscendingList(zope.interface.Interface):
-    zope.interface.invariant(ascending_invariant)
+class IAscendingList(Interface):
+    invariant(ascending_invariant)
 
 
-@zope.interface.implementer(IAscendingList)
+@implementer(IAscendingList)
 class AscendingList(list):
     pass
 
 
-@zope.interface.implementer(IAscendingList)
-class StubList(object):
-    pass
+def verify_ascending_list():
+    verifyObject(IAscendingList, AscendingList([1, 2, 3]))
 
 
-if __name__ == "__main__":
+def verify_nonascending_list():
+    """
+    verifyObject() does not check invariants, so this verification
+    will pass even though this list is not ascending.
+    """
+    verifyObject(IAscendingList, AscendingList([3, 2, 1]))
 
-    #zope.interface.classImplements(AscendingList, IAscendingList)
-    zope.interface.verify.verifyObject(IAscendingList, StubList())
-    
-    #my_list = AscendingList()
-    #my_list.extend([1, 2, 3])
-    #print(my_list)
 
-    #IAscendingList.validateInvariants(my_list)
-    #zope.interface.verify.verifyObject(IAscendingList, my_list)
+def validate_ascending_list():
+    IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
+
+
+def validate_nonascending_list():
+    IAscendingList.validateInvariants(AscendingList([3, 2, 1]))
 
