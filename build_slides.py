@@ -1,9 +1,16 @@
 import sys
 import ast
 from unparse import Unparser
+import StringIO
+import os
+import webbrowser
+
+import jinja2
+
 
 def get_slide_name(slide_str):
     return ":".join(slide_str.split(":")[1:]).strip()
+
 
 class SlideVisitor(ast.NodeVisitor):
     
@@ -29,16 +36,48 @@ class SlideVisitor(ast.NodeVisitor):
                 self.visit(child_node)
     
 
-if __name__ == "__main__":
-    filename = "test_file.py"
+def get_slide_ast_dict(filename):
+    """
+    Given a python filename return a dict mapping the slide names to
+    AST trees of the code contained inside those slides.
+    """
     with open(filename) as source_file:        
         source = source_file.read()
         tree = compile(source, filename, "exec", ast.PyCF_ONLY_AST)
         visitor = SlideVisitor()
         visitor.visit(tree)
-        for slide_name, node in visitor.slide_nodes.iteritems():
-            #print ast.dump(node)
-            Unparser(node, sys.stdout)
-            print "\n"
-            print "*"*80
+    return visitor.slide_nodes
+        
+
+def ast_map_to_source_map(ast_map, filename):
+    code_map = {}
+    for slide_name, node in ast_map.iteritems():
+        output = StringIO.StringIO()
+        Unparser(node, output)
+        code_map[slide_name] = {'code': output.getvalue(),
+                                'filename': filename}
+    return code_map
+    
+
+def render_slides(template_name, context):
+    loader = jinja2.FileSystemLoader(os.getcwd())
+    env = jinja2.Environment(loader=loader)
+    return env.get_template(template_name).render(**context)
+
+
+if __name__ == "__main__":
+    code_map = {}
+    filenames = ["test_file.py", 
+                 "binary_search.py", 
+                 "expression.py"]
+    for filename in filenames:
+        ast_map = get_slide_ast_dict(filename)
+        code_map.update(ast_map_to_source_map(ast_map, filename))
+
+    rendered = render_slides("presentation/index.html", code_map)
+    
+    with open("presentation/index_rendered.html", "wb") as rendered_file:
+        rendered_file.write(rendered)
+    
+    webbrowser.open("presentation/index_rendered.html")
     

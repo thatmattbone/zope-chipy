@@ -1,6 +1,8 @@
 from zope.interface import implementer, Interface, Attribute
 from zope.interface.verify import verifyObject
 
+"""SLIDE_START: define_interface"""
+
 class IExpressionNode(Interface):
     left = Attribute("The left child of this expression.")
     right = Attribute("The right child of this expression.")
@@ -8,7 +10,10 @@ class IExpressionNode(Interface):
     def evaluate():
         """Evaluate this expression"""
 
+"""SLIDE_END: define_interface"""
 
+
+"""SLIDE_START: addition_expression_node"""
 @implementer(IExpressionNode)
 class AdditionExpressionNode(object):
 
@@ -19,7 +24,7 @@ class AdditionExpressionNode(object):
 
     def evaluate(self):
         return self.left.evaluate() + self.right.evaluate()
-
+"""SLIDE_END: addition_expression_node"""
 
 @implementer(IExpressionNode)
 class IntegerExpressionNode(object):
