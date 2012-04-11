@@ -66,8 +66,9 @@
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <h1>Zope Interfaces: Run your docs</h1>
-            
+            <h1>Zope Interfaces</h1>            
+            <h2><a href="https://github.com/thatmattbone/zope-chipy">https://github.com/thatmattbone/zope-chipy</a></h2>
+
             <div style="padding-top: 2em; text-align:center">
               <h2>by Matt Bone</h2>
               <h2>http://thatmattbone.com</h2>
@@ -97,8 +98,23 @@
           </ul>
         </div>
 
+
         <div class="slide" data-layout="alt">
-          <h1>Defining an Interface</h1>
+          <div class="vcenter">
+            <h1>objects are boxes with levers</h1>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <h1>zope.interface lets everyone know what levers your boxes will have</h1>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>define an interface</h1>
 
           <pre class="brush: python">
             {{ define_interface['code'] }}
@@ -111,7 +127,7 @@
 
 
         <div class="slide" data-layout="alt">
-          <h1>Implementing an Interface</h1>
+          <h1>implement an interface</h1>
 
           <pre class="brush: python">
             {{ addition_expression_node['code'] }}
@@ -124,7 +140,34 @@
 
 
         <div class="slide" data-layout="alt">
-          <h1>Make Sure an Object Provides an Interface</h1>
+          <h1>provide an interface</h1>
+
+          <pre class="brush: python">
+            todo
+          </pre>
+
+          <div class="footer" data-name="alt">
+            <pre>toodo</pre>
+          </div> 
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>some innards</h1>
+          <pre>
+            __implemented__
+          </pre>
+          <pre>
+            __providedBy__
+          </pre>
+          <pre>
+            __provides__
+          </pre>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>trust but verify</h1>
 
           <pre class="brush: python">
             {{ validate_addition_node['code'] }}
@@ -137,7 +180,7 @@
 
 
         <div class="slide" data-layout="alt">
-          <h1>An Interface With an Invariant</h1>
+          <h1>invariants</h1>
 
           <pre class="brush: python">
             {{ define_interface_with_invariant['code'] }}
@@ -150,7 +193,7 @@
 
 
         <div class="slide" data-layout="alt">
-          <h1>Defining the Invariant</h1>
+          <h1>define an invariant</h1>
 
           <pre class="brush: python">
             {{ define_invariant['code'] }}
@@ -161,8 +204,9 @@
           </div> 
         </div>
 
+
         <div class="slide" data-layout="alt">
-          <h1>Validating an Invariant</h1>
+          <h1>validate an invariant</h1>
 
           <pre class="brush: python">
             {{ validate_invariant['code'] }}
@@ -176,41 +220,124 @@
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <h1>Why would I use this?</h1>
+            <h1>why is any of this useful?</h1>
           </div>
         </div>
 
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <h1>Keep a large group of contributers on the same page.</h1>
+            <h1>python != java</h1>
           </div>
         </div>
 
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <h1>Plugin Systems - Get some guarantees early</h1>
+            <h1>but...</h1>
           </div>
         </div>
 
 
         <div class="slide" data-layout="alt">
-          <h1>Other Stuff Like This</h1>
+          <div class="vcenter">
+            <h1>keep a large group of contributers on the same page</h1>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <h1>inside our message building system...</h1>
+            <p>&nbsp;</p>
+            <h1>"put your fast stuff here and your slow stuff here"</h1>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <p>
+              <tt>SubscriberProvider</tt> has one method for yielding
+              user records and an attribute describing what interface
+              that user record provides
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <p>
+              <tt>MessageBuilder</tt> has an attribute describing what
+              kind of user record it expects and a method for adding
+              layers
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <p>
+              <tt>MessageLayer</tt> has an attribute describing what
+              kind of user record it expects and a method that mutates
+              a dictionary
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <p>
+              a dictionary mutatated by each <tt>MessageLayer</tt> in
+              a <tt>MessageBuilder</tt> is handed off to a templating
+              engine to be rendered
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <h1>wire things up at runtime</h1>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>interfaces in pyramid</h1>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>other stuff like this</h1>
           <ul>
-            <li>abc</li>
-            <li>traits from enthought</li>
-            <li>colander</li>
+            <li><a href="http://docs.python.org/library/abc.html">abc</a></li>
+            <li><a href="http://code.enthought.com/projects/traits/">traits from enthought</a></li>
+            <li><a href="http://docs.pylonsproject.org/projects/colander/en/latest/">colander</a></li>
             <li>django/sqlaclhemy models</li>
           </ul>
         </div>
         
 
+        <div class="slide" data-layout="alt">
+          <h1>documentation, commentary, and criticism</h1>
+          <ul>
+            <li><a href="http://docs.zope.org/zope.interface/">zope.interface documentation</a></li>
+            <li><a href="http://wiki.zope.org/zope3/WhatAreInterfaces">What are interfaces? -- Zope Documentation</a></li>
+            <li><a href="http://stackoverflow.com/questions/2521189/purpose-of-zope-interfaces">Purpose of Zope Interfaces? -- stackoverflow</a></li>
+            <li><a href="http://www.python.org/dev/peps/pep-3119/">PEP 3119: Introducing Abstract Base Classes</a></li>
+            <li><a href="http://www.coactivate.org/projects/topp-engineering/blog/2008/10/20/what-bothers-me-about-the-component-architecture/">What Bothers Me About The Component Architecture -- Ian Bicking</a></li>
+          </ul>
+        </div>
+
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">           
             <div style="padding-top: 2em; text-align:center">
-              <h2>by Matt Bone</h2>
+              <h1><a href="https://github.com/thatmattbone/zope-chipy">https://github.com/thatmattbone/zope-chipy</a></h1>
               <p>&nbsp;</p>
               <h2>http://thatmattbone.com</h2>
               <h2>@thatmattbone</h2>
