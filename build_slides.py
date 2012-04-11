@@ -76,7 +76,7 @@ if __name__ == "__main__":
         ast_map = get_slide_ast_dict(filename)
         code_map.update(ast_map_to_source_map(ast_map, filename))
 
-    rendered = render_slides("presentation/index.html", code_map)
+    rendered = render_slides("presentation/index_in.html", code_map)
     
     with open("presentation/index_rendered.html", "wb") as rendered_file:
         rendered_file.write(rendered)

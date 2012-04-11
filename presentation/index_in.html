@@ -117,18 +117,11 @@
           <h1>define an interface</h1>
 
           <pre class="brush: python">
-            
-
-class IExpressionNode(Interface, ):
-    left = Attribute('The left child of this expression.')
-    right = Attribute('The right child of this expression.')
-
-    def evaluate():
-        'Evaluate this expression'
+            {{ define_interface['code'] }}
           </pre>
 
           <div class="footer" data-name="alt">
-            <pre>expression.py</pre>
+            <pre>{{ define_interface['filename'] }}</pre>
           </div> 
         </div>
 
@@ -137,21 +130,11 @@ class IExpressionNode(Interface, ):
           <h1>implement an interface</h1>
 
           <pre class="brush: python">
-            
-
-@implementer(IExpressionNode)
-class AdditionExpressionNode(object, ):
-
-    def __init__(self, left, right):
-        self.left = left
-        self.right = right
-
-    def evaluate(self):
-        return (self.left.evaluate() + self.right.evaluate())
+            {{ addition_expression_node['code'] }}
           </pre>
 
           <div class="footer" data-name="alt">
-            <pre>expression.py</pre>
+            <pre>{{ addition_expression_node['filename'] }}</pre>
           </div> 
         </div>
 
@@ -187,19 +170,11 @@ class AdditionExpressionNode(object, ):
           <h1>trust but verify</h1>
 
           <pre class="brush: python">
-            
-
-def validate_addition_node():
-    five = IntegerExpressionNode(5)
-    three = IntegerExpressionNode(3)
-    eight = AdditionExpressionNode(five, three)
-    IExpressionNode.implementedBy(AdditionExpressionNode)
-    IExpressionNode.providedBy(eight)
-    verifyObject(IExpressionNode, eight)
+            {{ validate_addition_node['code'] }}
           </pre>
 
           <div class="footer" data-name="alt">
-            <pre>expression.py</pre>
+            <pre>{{ validate_addition_node['filename'] }}</pre>
           </div> 
         </div>
 
@@ -208,14 +183,11 @@ def validate_addition_node():
           <h1>invariants</h1>
 
           <pre class="brush: python">
-            
-
-class IAscendingList(Interface, ):
-    invariant(ascending_invariant)
+            {{ define_interface_with_invariant['code'] }}
           </pre>
 
           <div class="footer" data-name="alt">
-            <pre>binary_search.py</pre>
+            <pre>{{ define_interface_with_invariant['filename'] }}</pre>
           </div> 
         </div>
 
@@ -224,18 +196,11 @@ class IAscendingList(Interface, ):
           <h1>define an invariant</h1>
 
           <pre class="brush: python">
-            
-
-def ascending_invariant(ascending_list):
-    if (len(ascending_list) > 0):
-        prev = ascending_list[0]
-        for item in ascending_list:
-            if (prev > item):
-                raise Invalid
+            {{ define_invariant['code'] }}
           </pre>
 
           <div class="footer" data-name="alt">
-            <pre>binary_search.py</pre>
+            <pre>{{ define_invariant['filename'] }}</pre>
           </div> 
         </div>
 
@@ -244,12 +209,11 @@ def ascending_invariant(ascending_list):
           <h1>validate an invariant</h1>
 
           <pre class="brush: python">
-            
-IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
+            {{ validate_invariant['code'] }}
           </pre>
 
           <div class="footer" data-name="alt">
-            <pre>binary_search.py</pre>
+            <pre>{{ validate_invariant['filename'] }}</pre>
           </div> 
         </div>
 
