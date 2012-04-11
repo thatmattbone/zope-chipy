@@ -14,9 +14,11 @@ def get_slide_name(slide_str):
 
 class SlideVisitor(ast.NodeVisitor):
     
-    slide_nodes = {}
-    recording = False
-    slide_name = None
+    def __init__(self):
+        self.slide_nodes = {}
+        self.recording = False
+        self.slide_name = None
+
 
     def visit_Str(self, node):
         if node.s.startswith("SLIDE_START: "):

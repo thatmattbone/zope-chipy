@@ -50,10 +50,12 @@ class BrokenIntegerExpressionNode(object):
 
 
 def validate_addition_node():
+    """SLIDE_START: validate_addition_node"""
     IExpressionNode.implementedBy(AdditionExpressionNode)
     eight = AdditionExpressionNode(IntegerExpressionNode(5), IntegerExpressionNode(3))
     IExpressionNode.providedBy(eight)
     verifyObject(IExpressionNode, eight)
+    """SLIDE_END: validate_addition_node"""
 
 
 def validate_integer_node():

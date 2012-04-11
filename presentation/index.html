@@ -89,15 +89,12 @@
         </div>
 
         <div class="slide" data-layout="alt">
-          <div class="vcenter">
-            <h1><a href="http://pypi.python.org/pypi/zope.interface/3.8.0">http://pypi.python.org/pypi/zope.interface/3.8.0</a></h1>
-            <p>111kb</p>
-            <p>Python 2.7 and Python 3.2</p>
-          </div>
-
-          <div class="footer" data-name="alt">
-          footer  
-          </div> 
+          <h1>zope.interface</h1>
+          <ul>
+            <li><a href="http://pypi.python.org/pypi/zope.interface/3.8.0">http://pypi.python.org/pypi/zope.interface/3.8.0</a></li>
+            <li>111kb</li>
+            <li>Python 2.7 and Python 3.2</li>
+          </ul>
         </div>
 
         <div class="slide" data-layout="alt">
@@ -122,6 +119,57 @@
 
           <div class="footer" data-name="alt">
             <pre>{{ addition_expression_node['filename'] }}</pre>
+          </div> 
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>Make Sure an Object Provides an Interface</h1>
+
+          <pre class="brush: python">
+            {{ validate_addition_node['code'] }}
+          </pre>
+
+          <div class="footer" data-name="alt">
+            <pre>{{ validate_addition_node['filename'] }}</pre>
+          </div> 
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>An Interface With an Invariant</h1>
+
+          <pre class="brush: python">
+            {{ define_interface_with_invariant['code'] }}
+          </pre>
+
+          <div class="footer" data-name="alt">
+            <pre>{{ define_interface_with_invariant['filename'] }}</pre>
+          </div> 
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>Defining the Invariant</h1>
+
+          <pre class="brush: python">
+            {{ define_invariant['code'] }}
+          </pre>
+
+          <div class="footer" data-name="alt">
+            <pre>{{ define_invariant['filename'] }}</pre>
+          </div> 
+        </div>
+
+        <div class="slide" data-layout="alt">
+          <h1>Validating an Invariant</h1>
+
+          <pre class="brush: python">
+            {{ validate_invariant['code'] }}
+          </pre>
+
+          <div class="footer" data-name="alt">
+            <pre>{{ validate_invariant['filename'] }}</pre>
           </div> 
         </div>
 
