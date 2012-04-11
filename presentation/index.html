@@ -20,17 +20,10 @@
         <!-- Slippy theme -->
         <link type="text/css" rel="stylesheet" href="slippy-pure.css"/>
 
-        <!-- Syntax highlighting core file  -->
-        <script type="text/javascript" src="highlighter/shCore.js"></script>
 
-        <!-- Syntax highlighting brushes, remove those you don't need -->
-        <script type="text/javascript" src="highlighter/shBrushPlain.js"></script>
-        <script type="text/javascript" src="highlighter/shBrushPython.js"></script>
-        <script type="text/javascript" src="highlighter/shBrushXml.js"></script>
-
-        <!-- Syntax highlighting styles-->
-        <link type="text/css" rel="stylesheet" href="highlighter/shCore.css"/>
-        <link type="text/css" rel="stylesheet" href="highlighter/shThemeEclipse.css"/>
+        <link rel="stylesheet" href="highlight/styles/googlecode.css">
+        <script src="highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
 
         <!-- Slippy init code -->
         <script type="text/javascript">
@@ -55,9 +48,15 @@
 
         <!-- Custom style for this deck -->
         <style type="text/css">
-            .slide.nofooter {
-                border: 0;
-                background: 0;
+          body, html {
+              background: #fff;
+              color: #000;
+              font-family: Tahoma,Verdana,sans-serif;
+          }
+
+          .slide.nofooter {
+              border: 0;
+          background: 0;
             }
         </style>
 
@@ -114,18 +113,36 @@
 
 
         <div class="slide" data-layout="alt">
+          <h1>expression tree</h1>
+          <div class="vcenter">
+            <div style="text-align: center">
+              <img src="expression_tree.png"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-layout="alt">
+          <h1>expression tree</h1>          
+            <pre><code class="python">
+    five = IntegerExpressionNode(5)
+    three = IntegerExpressionNode(3)
+    eight = AdditionExpressionNode(five, three)
+    eight.evaluate()
+</code></pre>
+
+        </div>
+
+
+        <div class="slide" data-layout="alt">
           <h1>define an interface</h1>
-
-          <pre class="brush: python">
-            
-
+            <pre><code class="python">
 class IExpressionNode(Interface, ):
     left = Attribute('The left child of this expression.')
     right = Attribute('The right child of this expression.')
 
     def evaluate():
         'Evaluate this expression'
-          </pre>
+          </code></pre>
 
           <div class="footer" data-name="alt">
             <pre>expression.py</pre>
@@ -135,10 +152,7 @@ class IExpressionNode(Interface, ):
 
         <div class="slide" data-layout="alt">
           <h1>implement an interface</h1>
-
-          <pre class="brush: python">
-            
-
+            <pre><code class="python">
 @implementer(IExpressionNode)
 class AdditionExpressionNode(object, ):
 
@@ -148,23 +162,10 @@ class AdditionExpressionNode(object, ):
 
     def evaluate(self):
         return (self.left.evaluate() + self.right.evaluate())
-          </pre>
+          </code></pre>
 
           <div class="footer" data-name="alt">
             <pre>expression.py</pre>
-          </div> 
-        </div>
-
-
-        <div class="slide" data-layout="alt">
-          <h1>provide an interface</h1>
-
-          <pre class="brush: python">
-            todo
-          </pre>
-
-          <div class="footer" data-name="alt">
-            <pre>toodo</pre>
           </div> 
         </div>
 
@@ -186,9 +187,7 @@ class AdditionExpressionNode(object, ):
         <div class="slide" data-layout="alt">
           <h1>trust but verify</h1>
 
-          <pre class="brush: python">
-            
-
+          <pre><code class="python">            
 def validate_addition_node():
     five = IntegerExpressionNode(5)
     three = IntegerExpressionNode(3)
@@ -196,7 +195,7 @@ def validate_addition_node():
     IExpressionNode.implementedBy(AdditionExpressionNode)
     IExpressionNode.providedBy(eight)
     verifyObject(IExpressionNode, eight)
-          </pre>
+          </code></pre>
 
           <div class="footer" data-name="alt">
             <pre>expression.py</pre>
@@ -207,12 +206,10 @@ def validate_addition_node():
         <div class="slide" data-layout="alt">
           <h1>invariants</h1>
 
-          <pre class="brush: python">
-            
-
+          <pre><code class="python">            
 class IAscendingList(Interface, ):
     invariant(ascending_invariant)
-          </pre>
+          </code></pre>
 
           <div class="footer" data-name="alt">
             <pre>binary_search.py</pre>
@@ -223,16 +220,14 @@ class IAscendingList(Interface, ):
         <div class="slide" data-layout="alt">
           <h1>define an invariant</h1>
 
-          <pre class="brush: python">
-            
-
+          <pre><code class="python">
 def ascending_invariant(ascending_list):
     if (len(ascending_list) > 0):
         prev = ascending_list[0]
         for item in ascending_list:
             if (prev > item):
                 raise Invalid
-          </pre>
+          </code></pre>
 
           <div class="footer" data-name="alt">
             <pre>binary_search.py</pre>
@@ -243,10 +238,9 @@ def ascending_invariant(ascending_list):
         <div class="slide" data-layout="alt">
           <h1>validate an invariant</h1>
 
-          <pre class="brush: python">
-            
+          <pre> <code class="python">            
 IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
-          </pre>
+          </code></pre>
 
           <div class="footer" data-name="alt">
             <pre>binary_search.py</pre>
