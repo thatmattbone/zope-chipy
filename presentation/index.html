@@ -357,6 +357,25 @@ IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
           </div>
         </div>
 
+        
+        <div class="slide" data-layout="alt">
+          <h1>user records</h1>
+          <pre><code class="python">
+class IUserRecord(Interface):
+    name = Attribute('The name of a user.')
+    email = Attribute('The email address of a user')
+
+
+class IUserRecordWithZip(IUserRecord):
+    zip_code = Attribute('The zip code of a user')
+
+
+class IGeolocatedUserRecord(IUserRecordWithZip):
+    latitude = Attribute('The latitudeof a user')
+    longitude = Attribute('The longitude of a user')
+          </code></pre>
+        </div>
+
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
