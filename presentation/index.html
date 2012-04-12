@@ -56,8 +56,17 @@
 
           .slide.nofooter {
               border: 0;
-          background: 0;
-            }
+              background: 0;
+          }
+          pre {
+              font-weight: bold;
+              font-size: 1.2em;
+          }
+          .big {
+              font-size: 1.5em;
+              font-weight: bold;
+          }
+
         </style>
 
     </head>
@@ -122,12 +131,42 @@
         </div>
 
         <div class="slide" data-layout="alt">
+          <h1>expression tree</h1>
+            <pre><code class="python">
+class AdditionExpressionNode(object):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def evaluate(self):
+        return self.left.evaluate() + self.right.evaluate()
+
+
+class IntegerExpressionNode(object):
+    def __init__(self, value):
+        self.value = value
+
+    def evaluate(self):
+        return self.value
+          </code></pre>
+
+          <div class="footer" data-name="alt">
+            <pre>expression.py</pre>
+          </div> 
+        </div>
+
+
+        <div class="slide" data-layout="alt">
           <h1>expression tree</h1>          
             <pre><code class="python">
     five = IntegerExpressionNode(5)
     three = IntegerExpressionNode(3)
+
     eight = AdditionExpressionNode(five, three)
-    eight.evaluate()
+    #eight.left is five
+    #eight.right is three
+
+    eight.evaluate() #returns 8
 </code></pre>
 
         </div>
@@ -136,7 +175,9 @@
         <div class="slide" data-layout="alt">
           <h1>define an interface</h1>
             <pre><code class="python">
-class IExpressionNode(Interface, ):
+from zope.interface import Interface, Attribute
+
+class IExpressionNode(Interface):
     left = Attribute('The left child of this expression.')
     right = Attribute('The right child of this expression.')
 
@@ -153,15 +194,41 @@ class IExpressionNode(Interface, ):
         <div class="slide" data-layout="alt">
           <h1>implement an interface</h1>
             <pre><code class="python">
+from zope.interface import implementer
+
 @implementer(IExpressionNode)
-class AdditionExpressionNode(object, ):
+class AdditionExpressionNode(object):
 
     def __init__(self, left, right):
         self.left = left
         self.right = right
 
     def evaluate(self):
-        return (self.left.evaluate() + self.right.evaluate())
+        return self.left.evaluate() + self.right.evaluate()
+          </code></pre>
+
+          <div class="footer" data-name="alt">
+            <pre>expression.py</pre>
+          </div> 
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>implement an interface</h1>
+            <pre><code class="python">
+from zope.interface import implementer
+
+@implementer(IExpressionNode)
+class IntegerExpressionNode(object):
+    
+    left = None
+    right = None
+    
+    def __init__(self, value):
+        self.value = value
+
+    def evaluate(self):
+        return self.value
           </code></pre>
 
           <div class="footer" data-name="alt">
@@ -187,13 +254,14 @@ class AdditionExpressionNode(object, ):
         <div class="slide" data-layout="alt">
           <h1>trust but verify</h1>
 
-          <pre><code class="python">            
-def validate_addition_node():
+          <pre><code class="python">
     five = IntegerExpressionNode(5)
     three = IntegerExpressionNode(3)
     eight = AdditionExpressionNode(five, three)
+
     IExpressionNode.implementedBy(AdditionExpressionNode)
     IExpressionNode.providedBy(eight)
+
     verifyObject(IExpressionNode, eight)
           </code></pre>
 
@@ -207,8 +275,13 @@ def validate_addition_node():
           <h1>invariants</h1>
 
           <pre><code class="python">            
-class IAscendingList(Interface, ):
+class IAscendingList(Interface):
     invariant(ascending_invariant)
+
+
+@implementer(IAscendingList)
+class AscendingList(list):
+    pass
           </code></pre>
 
           <div class="footer" data-name="alt">
@@ -287,7 +360,7 @@ IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p>
+            <p class="big">
               <tt>SubscriberProvider</tt> has one method for yielding
               user records and an attribute describing what interface
               that user record provides
@@ -298,7 +371,7 @@ IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p>
+            <p class="big">
               <tt>MessageBuilder</tt> has an attribute describing what
               kind of user record it expects and a method for adding
               layers
@@ -309,7 +382,7 @@ IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p>
+            <p class="big">
               <tt>MessageLayer</tt> has an attribute describing what
               kind of user record it expects and a method that mutates
               a dictionary
@@ -320,7 +393,7 @@ IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p>
+            <p class="big">
               a dictionary mutatated by each <tt>MessageLayer</tt> in
               a <tt>MessageBuilder</tt> is handed off to a templating
               engine to be rendered
