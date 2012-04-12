@@ -255,6 +255,8 @@ class IntegerExpressionNode(object):
           <h1>trust but verify</h1>
 
           <pre><code class="python">
+    from zope.interface.verify import verifyObject
+
     five = IntegerExpressionNode(5)
     three = IntegerExpressionNode(3)
     eight = AdditionExpressionNode(five, three)
@@ -275,6 +277,8 @@ class IntegerExpressionNode(object):
           <h1>invariants</h1>
 
           <pre><code class="python">            
+from zope.interface import implementer, invariant, Interface
+
 class IAscendingList(Interface):
     invariant(ascending_invariant)
 
@@ -294,6 +298,8 @@ class AscendingList(list):
           <h1>define an invariant</h1>
 
           <pre><code class="python">
+from zope.interface import Invalid
+
 def ascending_invariant(ascending_list):
     if (len(ascending_list) > 0):
         prev = ascending_list[0]
@@ -352,15 +358,58 @@ IAscendingList.validateInvariants(AscendingList([1, 2, 3]))
         <div class="slide" data-layout="alt">
           <div class="vcenter">
             <h1>inside our message building system...</h1>
-            <p>&nbsp;</p>
-            <h1>"put your fast stuff here and your slow stuff here"</h1>
           </div>
         </div>
 
-        
+
         <div class="slide" data-layout="alt">
-          <h1>user records</h1>
+          <div class="vcenter">
+            <p class="big">
+              <tt>IUserRecordProvider</tt> specifies a method for yielding user records
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <p class="big">
+              <tt>IMessagePipeline</tt> specifies methods for running
+              the pipeline for one user and for adding stages to the
+              pipeline              
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <p class="big">
+              <tt>IPipelineStage</tt> specifies a method for
+              mutating the dictionary passed along the pipeline
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <h1>put your slow stuff here</h1>
           <pre><code class="python">
+class IPipelineStage(Interface):
+    def run_stage(user_record, context):
+        """
+        Run this stage of the pipline 
+        (possibly) mutating the context.
+        """
+</code></pre>          
+        </div>
+
+
+        <div class="slide" data-layout="alt">
+          <div class="vcenter">
+            <h1>wire things up at runtime</h1>
+
+            <pre><code class="python">
 class IUserRecord(Interface):
     name = Attribute('The name of a user.')
     email = Attribute('The email address of a user')
@@ -373,67 +422,52 @@ class IUserRecordWithZip(IUserRecord):
 class IGeolocatedUserRecord(IUserRecordWithZip):
     latitude = Attribute('The latitudeof a user')
     longitude = Attribute('The longitude of a user')
-          </code></pre>
-        </div>
-
-
-        <div class="slide" data-layout="alt">
-          <div class="vcenter">
-            <p class="big">
-              <tt>SubscriberProvider</tt> has one method for yielding
-              user records and an attribute describing what interface
-              that user record provides
-            </p>
+            </code></pre>
           </div>
         </div>
 
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p class="big">
-              <tt>MessageBuilder</tt> has an attribute describing what
-              kind of user record it expects and a method for adding
-              layers
-            </p>
+            <h1>interfaces in pyramid</h1>
           </div>
         </div>
-
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p class="big">
-              <tt>MessageLayer</tt> has an attribute describing what
-              kind of user record it expects and a method that mutates
-              a dictionary
-            </p>
-          </div>
-        </div>
+            <h1>subscribing to events</h1>
+            <pre><code class="python">
+from pyramid.events import NewRequest
+from pyramid.events import subscriber
 
+@subscriber(NewRequest)
+def mysubscriber(event):
+        event.request.foo = 1
+</code></pre>
+          </div>
+          <div class="footer" data-name="alt">
+            from <a href="http://docs.pylonsproject.org/projects/pyramid/en/1.3-branch/narr/events.html">
+              http://docs.pylonsproject.org/projects/pyramid/en/1.3-branch/narr/events.html
+            </a>
+          </div> 
+        </div>
 
         <div class="slide" data-layout="alt">
           <div class="vcenter">
-            <p class="big">
-              a dictionary mutatated by each <tt>MessageLayer</tt> in
-              a <tt>MessageBuilder</tt> is handed off to a templating
-              engine to be rendered
-            </p>
+            <h1>subscribing to events</h1>
+            <pre><code class="python">
+class INewResponse(Interface):
+    request = Attribute('The request object')
+    response = Attribute('The response object')
+</code></pre>
+          </div>
+          <div class="footer" data-name="alt">
+            from <a href="https://github.com/Pylons/pyramid/blob/master/pyramid/interfaces.py#L34">
+              https://github.com/Pylons/pyramid/blob/master/pyramid/interfaces.py#L34
+            </a>
           </div>
         </div>
 
-
-        <div class="slide" data-layout="alt">
-          <div class="vcenter">
-            <h1>wire things up at runtime</h1>
-          </div>
-        </div>
-
-
-        <div class="slide" data-layout="alt">
-          <h1>interfaces in pyramid</h1>
-          <p>62 interfaces</p>
-          <p>a lot of them are just marker interfaces -- no methods or attributes defined but have a bunch of docs</p>
-          <p>extensive use of verifyClass and verifyObject in the test suite</p>
-        </div>
 
 
         <div class="slide" data-layout="alt">
