@@ -3,6 +3,12 @@ Zope Interfaces
 
 Presented at ChiPy on 4/12/2012
 
+Zope Interfaces provide a way for Python objects to promise to provide certain attributes and methods.  Without losing the benefits of duck-typing this can add a bit of structure and also doubles as runnable documentation.  For example, an application developer might point to an interface that can be implemented to create a plugin, and the plugin developer can verify at runtime that he or she has properly implemented this interface.  Furthermore, the metadata about what interfaces an object provides can be used to wire up dependencies between objects at runtime or configuration time with confidence that the relationships are compatible.
+
+For a simple example of the mechanics of creating and implementing interfaces, see `expression.py <https://github.com/thatmattbone/zope-chipy/blob/master/expression.py>`_.  Zope interfaces can also specify invariants, and `binary_search.py <https://github.com/thatmattbone/zope-chipy/blob/master/binary_search.py>`_ shows this in action.  Finally to discover what metadata zope interfaces are adding to objects to provide all of this behavior, check out `class_diff.py <https://github.com/thatmattbone/zope-chipy/blob/master/class_diff.py>`_.
+
+The full set of slides as presented are available `here <http://static.thatmattbone.com/zope-chipy/>`_ but they probably aren't terribly useful.
+
 More Information
 ++++++++++++++++
 
